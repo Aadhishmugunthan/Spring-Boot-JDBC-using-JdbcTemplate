@@ -24,6 +24,7 @@ public class AlienService {
     }
 
     public Alien getAlienById(int id) {
-        return repo.findById(id);
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Alien not found with id: " + id));
     }
 }
