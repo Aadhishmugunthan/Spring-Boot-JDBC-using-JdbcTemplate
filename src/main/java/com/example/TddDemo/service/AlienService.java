@@ -5,7 +5,6 @@ import com.example.TddDemo.repo.AlienRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public class AlienService {
 
@@ -15,8 +14,9 @@ public class AlienService {
         this.repo = repo;
     }
 
-    public void addAlien(Alien alien) {
+    public Alien addAlien(Alien alien) {
         repo.save(alien);
+        return alien;
     }
 
     public List<Alien> getAliens() {
@@ -25,6 +25,16 @@ public class AlienService {
 
     public Alien getAlienById(int id) {
         return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Alien not found with id: " + id));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Alien not found with id: " + id));
+    }
+
+    public void deleteAlien(int id) {
+        repo.deleteById(id);
+    }
+
+    public Alien updateAlien(Alien alien) {
+        repo.update(alien);
+        return alien;
     }
 }
